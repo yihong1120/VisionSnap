@@ -76,11 +76,52 @@ struct ContentView: View {
 
 struct PredictionPage: View {
     var body: some View {
-        Text("Prediction Page")
-            .font(.title)
-            .padding()
+        HStack {
+            VStack(alignment: .leading) {
+                Button(action: {
+                    // 相機按鈕的操作
+                }) {
+                    HStack {
+                        Image(systemName: "camera")
+                        Text("相機")
+                            .font(.title2)
+                            .padding()
+                    }
+                }
+                
+                Button(action: {
+                    // 清除按鈕的操作
+                }) {
+                    HStack {
+                        Image(systemName: "trash")
+                        Text("清除")
+                            .font(.title2)
+                            .padding()
+                    }
+                }
+                
+                Button(action: {
+                    // 開始按鈕的操作
+                }) {
+                    HStack {
+                        Image(systemName: "play")
+                        Text("開始")
+                            .font(.title2)
+                            .padding()
+                    }
+                }
+                
+                Spacer()
+            }
+            
+            // 這裡放置右側的內容
+            Text("右側的內容")
+                .font(.title)
+                .padding()
+        }
     }
 }
+
 
 struct ResultsPage: View {
     var body: some View {
