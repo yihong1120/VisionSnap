@@ -128,30 +128,136 @@ struct InfoPage: View {
 }
 
 
-
 struct OutputPage: View {
     var body: some View {
-        Text("Results Page")
-            .font(.title)
-            .padding()
+        HStack {
+            VStack(alignment: .center) {
+                Spacer()
+                
+                Button(action: {
+                    // 相機按鈕的操作
+                }) {
+                    Image(systemName: "hand.point.up")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.bottom, 10)
+                
+                Button(action: {
+                    // 開始按鈕的操作
+                }) {
+                    Image(systemName: "camera.metering.matrix")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Spacer()
+            }
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
+
 
 struct ClassesPage: View {
     var body: some View {
-        Text("Classes Page")
-            .font(.title)
-            .padding()
+        HStack {
+            VStack(alignment: .center) {
+                Spacer()
+                
+                Button(action: {
+                    // 相機按鈕的操作
+                }) {
+                    Image(systemName: "pencil")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.bottom, 10)
+                
+                Button(action: {
+                    // 開始按鈕的操作
+                }) {
+                    Image(systemName: "eye")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Spacer()
+            }
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
+
 struct SetPage: View {
+    @State private var polygon_opacity: Double = 0.5
+    @State private var points_and_lines_opacity: Double = 0
+    
     var body: some View {
-        Text("Settings Page")
-            .font(.title)
-            .padding()
+        VStack {
+            Spacer()
+            
+            Text("Polygon Opacity: \(String(format: "%.2f", polygon_opacity))")
+                .font(.title2)
+                .padding()
+            
+            GeometryReader { geometry in
+                Slider(value: $polygon_opacity, in: 0...1, step: 0.01)
+                    .frame(width: geometry.size.width - 140) // 設置 Slider 的寬度，留出一些間距
+                    .padding()
+            }
+            
+            Text("Points and Lines Opacity")
+                .font(.title2)
+                .padding()
+            
+            HStack {
+                Button(action: {
+                    self.points_and_lines_opacity = 1
+                }) {
+                    Text("On")
+                        .font(.title2)
+                        .padding()
+                        .foregroundColor(points_and_lines_opacity == 1 ? .blue : .gray)
+                }
+                
+                Button(action: {
+                    self.points_and_lines_opacity = 0
+                }) {
+                    Text("Off")
+                        .font(.title2)
+                        .padding()
+                        .foregroundColor(points_and_lines_opacity == 0 ? .blue : .gray)
+                }
+            }
+            
+            Spacer()
+        }
+        .padding()
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
