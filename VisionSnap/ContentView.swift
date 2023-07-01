@@ -15,13 +15,13 @@ struct ContentView: View {
             // Main content view
             VStack {
                 if selectedTab == 0 {
-                    PredictionPage()
+                    InfoPage()
                 } else if selectedTab == 1 {
-                    ResultsPage()
+                    OutputPage()
                 } else if selectedTab == 2 {
                     ClassesPage()
                 } else if selectedTab == 3 {
-                    SettingsPage()
+                    SetPage()
                 }
                 Spacer() // push the content to the top
             }
@@ -33,7 +33,7 @@ struct ContentView: View {
                 Button(action: {
                     self.selectedTab = 0
                 }) {
-                    Text("Prediction")
+                    Text("Info")
                         .font(.title2)
                         .padding()
                         .foregroundColor(selectedTab == 0 ? .blue : .gray)
@@ -42,7 +42,7 @@ struct ContentView: View {
                 Button(action: {
                     self.selectedTab = 1
                 }) {
-                    Text("Results")
+                    Text("Output")
                         .font(.title2)
                         .padding()
                         .foregroundColor(selectedTab == 1 ? .blue : .gray)
@@ -60,7 +60,7 @@ struct ContentView: View {
                 Button(action: {
                     self.selectedTab = 3
                 }) {
-                    Text("Settings")
+                    Text("Set")
                         .font(.title2)
                         .padding()
                         .foregroundColor(selectedTab == 3 ? .blue : .gray)
@@ -74,56 +74,62 @@ struct ContentView: View {
     }
 }
 
-struct PredictionPage: View {
+struct InfoPage: View {
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
+                Spacer()
+                
                 Button(action: {
                     // 相機按鈕的操作
                 }) {
-                    HStack {
-                        Image(systemName: "camera")
-                        Text("相機")
-                            .font(.title2)
-                            .padding()
-                    }
+                    Image(systemName: "camera")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
+                .padding(.bottom, 10)
                 
                 Button(action: {
                     // 清除按鈕的操作
                 }) {
-                    HStack {
-                        Image(systemName: "trash")
-                        Text("清除")
-                            .font(.title2)
-                            .padding()
-                    }
+                    Image(systemName: "trash")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
+                .padding(.bottom, 10)
                 
                 Button(action: {
                     // 開始按鈕的操作
                 }) {
-                    HStack {
-                        Image(systemName: "play")
-                        Text("開始")
-                            .font(.title2)
-                            .padding()
-                    }
+                    Image(systemName: "play")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
                 }
                 
                 Spacer()
             }
             
-            // 這裡放置右側的內容
-            Text("右側的內容")
-                .font(.title)
-                .padding()
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 
-struct ResultsPage: View {
+
+struct OutputPage: View {
     var body: some View {
         Text("Results Page")
             .font(.title)
@@ -139,7 +145,7 @@ struct ClassesPage: View {
     }
 }
 
-struct SettingsPage: View {
+struct SetPage: View {
     var body: some View {
         Text("Settings Page")
             .font(.title)
