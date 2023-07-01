@@ -14,25 +14,14 @@ struct ContentView: View {
         ZStack(alignment: .topLeading) {
             // Main content view
             VStack {
-                switch selectedTab {
-                case 0:
-                    Text("Prediction Page")
-                        .font(.title)
-                        .padding()
-                case 1:
-                    Text("Results Page")
-                        .font(.title)
-                        .padding()
-                case 2:
-                    Text("Classes Page")
-                        .font(.title)
-                        .padding()
-                case 3:
-                    Text("Parametres Page")
-                        .font(.title)
-                        .padding()
-                default:
-                    Text("")
+                if selectedTab == 0 {
+                    PredictionPage()
+                } else if selectedTab == 1 {
+                    ResultsPage()
+                } else if selectedTab == 2 {
+                    ClassesPage()
+                } else if selectedTab == 3 {
+                    SettingsPage()
                 }
                 Spacer() // push the content to the top
             }
@@ -82,6 +71,38 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.ignoresSafeArea())
+    }
+}
+
+struct PredictionPage: View {
+    var body: some View {
+        Text("Prediction Page")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct ResultsPage: View {
+    var body: some View {
+        Text("Results Page")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct ClassesPage: View {
+    var body: some View {
+        Text("Classes Page")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct SettingsPage: View {
+    var body: some View {
+        Text("Settings Page")
+            .font(.title)
+            .padding()
     }
 }
 
