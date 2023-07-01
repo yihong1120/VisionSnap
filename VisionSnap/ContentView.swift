@@ -223,9 +223,13 @@ struct SetPage: View {
                 .padding()
             
             GeometryReader { geometry in
-                Slider(value: $polygon_opacity, in: 0...1, step: 0.01)
-                    .frame(width: geometry.size.width - 140) // 設置 Slider 的寬度，留出一些間距
-                    .padding()
+                HStack {
+                    Spacer()
+                    Slider(value: $polygon_opacity, in: 0...1, step: 0.01)
+                        .frame(width: geometry.size.width - 240) // 設置 Slider 的寬度，留出一些間距
+                    Spacer()
+                }
+                .padding()
             }
             
             Text("Points and Lines Opacity")
@@ -257,6 +261,7 @@ struct SetPage: View {
         .padding()
     }
 }
+
 
 
 struct ContentView_Previews: PreviewProvider {
