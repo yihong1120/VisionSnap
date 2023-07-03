@@ -12,8 +12,8 @@ struct InfoPage: View {
     @State private var image: Image? = Image(systemName: "photo")
     
     var body: some View {
-        ZStack {
-            HStack {
+        HStack {
+            VStack {
                 VStack(alignment: .center) {
                     Spacer()
                     
@@ -46,6 +46,7 @@ struct InfoPage: View {
                     
                     Button(action: {
                         // 開始按鈕的操作
+                        print(locations)
                     }) {
                         Image(systemName: "play")
                             .resizable()
@@ -62,29 +63,34 @@ struct InfoPage: View {
                 Spacer()
             }
             
-            Rectangle()
-                .fill(Color.gray)
-                .frame(width: 500, height: 350)
-                .overlay(
-                    ZStack {
-                        image?
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .gesture(
-                                DragGesture(minimumDistance: 0)
-                                    .onChanged { value in
-                                        locations.append(value.startLocation)
-                                    }
-                            )
-                        
-                        ForEach(locations.indices, id: \.self) { index in
-                            Circle()
-                                .fill(Color.red)
-                                .frame(width: 10, height: 10)
-                                .position(x: locations[index].x, y: locations[index].y)
+            ZStack {
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(width: 550, height: 350)
+                    .overlay(
+                        ZStack {
+                            image?
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .gesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged { value in
+                                            locations.append(value.startLocation)
+                                        }
+                                )
+                            
+                            ForEach(locations.indices, id: \.self) { index in
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 10, height: 10)
+                                    .position(x: locations[index].x, y: locations[index].y)
+                            }
                         }
-                    }
-                )
+                    )
+                    .offset(x: 20, y: 0)  // Add offset here
+            }
+            
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
