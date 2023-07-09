@@ -10,15 +10,16 @@ import SwiftUI
 struct InfoPage: View {
     @State private var locations: [CGPoint] = []
     @State private var image: Image? = Image(systemName: "photo")
-    
+    @State private var isImagePickerDisplayed = false
+
     var body: some View {
         HStack {
             VStack {
                 VStack(alignment: .center) {
                     Spacer()
-                    
+
                     Button(action: {
-                        // 相機按鈕的操作
+                        isImagePickerDisplayed = true
                     }) {
                         Image(systemName: "camera")
                             .resizable()
@@ -29,9 +30,11 @@ struct InfoPage: View {
                             .cornerRadius(8)
                     }
                     .padding(.bottom, 10)
-                    
+                    .sheet(isPresented: $isImagePickerDisplayed) {
+                        ImagePicker(image: $image)
+                    }
+
                     Button(action: {
-                        // 清除按鈕的操作
                         locations.removeAll()
                     }) {
                         Image(systemName: "trash")
@@ -43,9 +46,8 @@ struct InfoPage: View {
                             .cornerRadius(8)
                     }
                     .padding(.bottom, 10)
-                    
+
                     Button(action: {
-                        // 開始按鈕的操作
                         print(locations)
                     }) {
                         Image(systemName: "play")
@@ -56,13 +58,13 @@ struct InfoPage: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-                    
+
                     Spacer()
                 }
-                
+
                 Spacer()
             }
-            
+
             ZStack {
                 Rectangle()
                     .fill(Color.gray)
@@ -78,7 +80,7 @@ struct InfoPage: View {
                                             locations.append(value.startLocation)
                                         }
                                 )
-                            
+
                             ForEach(locations.indices, id: \.self) { index in
                                 Circle()
                                     .fill(Color.red)

@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SetPage: View {
-    @State private var polygon_opacity: Double = 0.5
-    @State private var points_and_lines_opacity: Double = 0
+//    @State private var polygon_opacity: Double = 0.5
+//    @State private var points_and_lines_opacity: Double = 0
+    
+    @AppStorage("polygon_opacity") private var polygon_opacity: Double = 0.5
+    @AppStorage("points_and_lines_opacity") private var points_and_lines_opacity: Double = 0
     
     var body: some View {
         VStack {
@@ -56,5 +59,11 @@ struct SetPage: View {
             Spacer()
         }
         .padding()
+    }
+}
+
+struct SetPage_Previews: PreviewProvider {
+    static var previews: some View {
+        SetPage()
     }
 }

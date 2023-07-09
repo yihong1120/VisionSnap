@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		189CFE7A2A5980BF002F1DAD /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189CFE792A5980BF002F1DAD /* ImageExtension.swift */; };
+		18A1E97F2A5304760033B50B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A1E97E2A5304760033B50B /* ImagePicker.swift */; };
 		18B839DC2A51AB8B00BD3F1A /* InfoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B839DB2A51AB8B00BD3F1A /* InfoPage.swift */; };
 		18B839DE2A51AC4700BD3F1A /* OutputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B839DD2A51AC4700BD3F1A /* OutputPage.swift */; };
 		18B839E02A51AC5800BD3F1A /* ClassesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B839DF2A51AC5800BD3F1A /* ClassesPage.swift */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		18042CE82A50040E00985CB6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		189CFE792A5980BF002F1DAD /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		18A1E97E2A5304760033B50B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		18B839DB2A51AB8B00BD3F1A /* InfoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPage.swift; sourceTree = "<group>"; };
 		18B839DD2A51AC4700BD3F1A /* OutputPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputPage.swift; sourceTree = "<group>"; };
 		18B839DF2A51AC5800BD3F1A /* ClassesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassesPage.swift; sourceTree = "<group>"; };
@@ -107,6 +111,8 @@
 				18BFB6282A45BACB00FB5C07 /* VisionSnapApp.swift */,
 				18BFB62A2A45BACB00FB5C07 /* ContentView.swift */,
 				18B839DB2A51AB8B00BD3F1A /* InfoPage.swift */,
+				189CFE792A5980BF002F1DAD /* ImageExtension.swift */,
+				18A1E97E2A5304760033B50B /* ImagePicker.swift */,
 				18B839DD2A51AC4700BD3F1A /* OutputPage.swift */,
 				18B839DF2A51AC5800BD3F1A /* ClassesPage.swift */,
 				18B839E12A51AC5E00BD3F1A /* SetPage.swift */,
@@ -274,9 +280,11 @@
 				18BFB62B2A45BACB00FB5C07 /* ContentView.swift in Sources */,
 				18BFB6292A45BACB00FB5C07 /* VisionSnapApp.swift in Sources */,
 				18B839E02A51AC5800BD3F1A /* ClassesPage.swift in Sources */,
+				18A1E97F2A5304760033B50B /* ImagePicker.swift in Sources */,
 				18B839DE2A51AC4700BD3F1A /* OutputPage.swift in Sources */,
 				18B839DC2A51AB8B00BD3F1A /* InfoPage.swift in Sources */,
 				18B839E22A51AC5E00BD3F1A /* SetPage.swift in Sources */,
+				189CFE7A2A5980BF002F1DAD /* ImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +446,7 @@
 				DEVELOPMENT_TEAM = 5DU8R27949;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -466,6 +475,7 @@
 				DEVELOPMENT_TEAM = 5DU8R27949;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
