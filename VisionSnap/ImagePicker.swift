@@ -33,9 +33,14 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//            if let uiImage = info[.originalImage] as? UIImage {
+//                parent.image = Image(uiImage: uiImage)
+//            }
             if let uiImage = info[.originalImage] as? UIImage {
-                parent.image = Image(uiImage: uiImage)
+                let resizedImage = uiImage.resize(to: CGSize(width: 550, height: 350))
+                parent.image = Image(uiImage: resizedImage)
             }
+
 
             parent.presentationMode.wrappedValue.dismiss()
         }

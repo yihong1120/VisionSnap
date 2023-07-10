@@ -33,6 +33,19 @@ struct InfoPage: View {
                     .sheet(isPresented: $isImagePickerDisplayed) {
                         ImagePicker(image: $image)
                     }
+                    
+                    Button(action: {
+                        print("Real-Time Camera")
+                    }) {
+                        Image(systemName: "video")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .padding(8)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding(.bottom, 10)
 
                     Button(action: {
                         locations.removeAll()
@@ -87,6 +100,17 @@ struct InfoPage: View {
                                     .frame(width: 10, height: 10)
                                     .position(x: locations[index].x, y: locations[index].y)
                             }
+                            
+                            if locations.count >= 2 {
+                                Path { path in
+                                    path.move(to: locations.first!)
+                                    for index in 1..<locations.count {
+                                        path.addLine(to: locations[index])
+                                    }
+                                }
+                                .stroke(Color.red, lineWidth: 2)
+                            }
+
                         }
                     )
                     .offset(x: 20, y: 0)  // Add offset here
@@ -95,5 +119,11 @@ struct InfoPage: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+struct InfoPage_Previews: PreviewProvider {
+    static var previews: some View {
+        InfoPage()
     }
 }
