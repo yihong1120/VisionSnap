@@ -1,5 +1,5 @@
 //
-//  ImagePicker.swift
+//  OutputPage.swift
 //  VisionSnap
 //
 //  Created by WONG YI HUNG on 2023/7/3.

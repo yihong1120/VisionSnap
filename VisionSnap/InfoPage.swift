@@ -9,8 +9,13 @@ import SwiftUI
 
 struct InfoPage: View {
     @State private var locations: [CGPoint] = []
+    @State private var polygons: [[CGPoint]] = []
     @State private var image: Image? = Image(systemName: "photo")
     @State private var isImagePickerDisplayed = false
+    @AppStorage("polygon_opacity", store: UserDefaults(suiteName: "NYCU.VisionSnap")) private var polygon_opacity: Double = 0.5
+
+    private let closingDistance: CGFloat = 20.0
+//    @AppStorage("polygon_opacity") private var polygon_opacity: Double = 0.5
 
     var body: some View {
         HStack {
@@ -48,7 +53,7 @@ struct InfoPage: View {
                     .padding(.bottom, 10)
 
                     Button(action: {
-                        locations.removeAll()
+                        polygons.removeAll()
                     }) {
                         Image(systemName: "trash")
                             .resizable()
@@ -61,7 +66,7 @@ struct InfoPage: View {
                     .padding(.bottom, 10)
 
                     Button(action: {
-                        print(locations)
+                        print(polygons)
                     }) {
                         Image(systemName: "play")
                             .resizable()
@@ -90,9 +95,36 @@ struct InfoPage: View {
                                 .gesture(
                                     DragGesture(minimumDistance: 0)
                                         .onChanged { value in
-                                            locations.append(value.startLocation)
+                                            if self.locations.count >= 2,
+                                               self.isPoint(value.startLocation, closeTo: self.locations.first!) {
+                                                self.polygons.append(self.locations)
+                                                self.locations = []
+                                            } else {
+                                                self.locations.append(value.startLocation)
+                                            }
                                         }
                                 )
+
+                            ForEach(polygons.indices, id: \.self) { index in
+                                let polygon = polygons[index]
+                                Path { path in
+                                    guard let firstPoint = polygon.first else { return }
+                                    path.move(to: firstPoint)
+                                    for point in polygon.dropFirst() {
+                                        path.addLine(to: point)
+                                    }
+                                    path.closeSubpath()
+                                }
+                                .fill(Color.red.opacity(polygon_opacity)) // Fill with color
+                                .stroke(Color.red, lineWidth: 2)
+                                
+                                ForEach(polygon.indices, id: \.self) { pointIndex in
+                                    Circle()
+                                        .fill(Color.red)
+                                        .frame(width: 10, height: 10)
+                                        .position(x: polygon[pointIndex].x, y: polygon[pointIndex].y)
+                                }
+                            }
 
                             ForEach(locations.indices, id: \.self) { index in
                                 Circle()
@@ -100,7 +132,7 @@ struct InfoPage: View {
                                     .frame(width: 10, height: 10)
                                     .position(x: locations[index].x, y: locations[index].y)
                             }
-                            
+
                             if locations.count >= 2 {
                                 Path { path in
                                     path.move(to: locations.first!)
@@ -113,17 +145,23 @@ struct InfoPage: View {
 
                         }
                     )
-                    .offset(x: 20, y: 0)  // Add offset here
+                    .offset(x: 20, y: 0)
             }
             
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-}
 
-struct InfoPage_Previews: PreviewProvider {
-    static var previews: some View {
-        InfoPage()
+    private func isPoint(_ point1: CGPoint, closeTo point2: CGPoint) -> Bool {
+        let dx = point1.x - point2.x
+        let dy = point1.y - point2.y
+        return sqrt(dx * dx + dy * dy) < closingDistance
     }
 }
+
+//struct InfoPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InfoPage()
+//    }
+//}

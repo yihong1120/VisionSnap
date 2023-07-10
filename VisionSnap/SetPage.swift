@@ -1,5 +1,5 @@
 //
-//  SwiftUIView2.swift
+//  SetPage.swift
 //  VisionSnap
 //
 //  Created by WONG YI HUNG on 2023/7/2.
@@ -62,8 +62,8 @@ struct SetPage: View {
     }
 }
 
-struct SetPage_Previews: PreviewProvider {
-    static var previews: some View {
-        SetPage()
-    }
-}
+//struct SetPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SetPage()
+//    }
+//}
