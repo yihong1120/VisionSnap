@@ -100,7 +100,7 @@ struct ClassesPage: View {
 
             // Second Box
             VStack(alignment: .center) {
-                Text("Numbers")
+                Text("Illustrations")
                     .font(.headline)
                     .padding(.bottom, 5)
 

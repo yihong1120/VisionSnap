@@ -47,7 +47,7 @@ struct OutputPage: View {
             Spacer()
 
             VStack(alignment: .center) {
-                Text("Items")
+                Text("Polygons")
                     .font(.headline)
                     .padding(.bottom, 5)
                 
@@ -61,7 +61,7 @@ struct OutputPage: View {
             Spacer()
 
             VStack(alignment: .center) {
-                Text("Numbers")
+                Text("Predictions")
                     .font(.headline)
                     .padding(.bottom, 5)
                 
