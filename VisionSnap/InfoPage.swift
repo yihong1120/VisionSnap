@@ -10,12 +10,12 @@ import SwiftUI
 struct InfoPage: View {
     @State private var locations: [CGPoint] = []
     @State private var polygons: [[CGPoint]] = []
+    @State private var uiImage: UIImage? = nil
     @State private var image: Image? = Image(systemName: "photo")
     @State private var isImagePickerDisplayed = false
     @AppStorage("polygon_opacity", store: UserDefaults(suiteName: "NYCU.VisionSnap")) private var polygon_opacity: Double = 0.5
 
     private let closingDistance: CGFloat = 20.0
-//    @AppStorage("polygon_opacity") private var polygon_opacity: Double = 0.5
 
     var body: some View {
         HStack {
@@ -36,9 +36,14 @@ struct InfoPage: View {
                     }
                     .padding(.bottom, 10)
                     .sheet(isPresented: $isImagePickerDisplayed) {
-                        ImagePicker(image: $image)
+                        ImagePicker(image: $uiImage)
                     }
-                    
+                    .onChange(of: uiImage) { newValue in
+                        if let validImage = newValue {
+                            image = Image(uiImage: validImage)
+                        }
+                    }
+
                     Button(action: {
                         print("Real-Time Camera")
                     }) {
