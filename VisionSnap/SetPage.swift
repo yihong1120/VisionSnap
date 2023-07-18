@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SetPage: View {
-//    @State private var polygon_opacity: Double = 0.5
-//    @State private var points_and_lines_opacity: Double = 0
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: VisionSnapEntity.entity(), sortDescriptors: []) var settings: FetchedResults<VisionSnapEntity>
     
-    @AppStorage("polygon_opacity") private var polygon_opacity: Double = 0.5
-    @AppStorage("points_and_lines_opacity") private var points_and_lines_opacity: Double = 0
-    
+    @State private var polygon_opacity: Double = 0.5
+    @State private var points_and_lines_opacity: Double = 0
+
     var body: some View {
         VStack {
             Spacer()
@@ -26,6 +27,9 @@ struct SetPage: View {
                 HStack {
                     Spacer()
                     Slider(value: $polygon_opacity, in: 0...1, step: 0.01)
+                        .onChange(of: polygon_opacity) { _ in
+                            saveSettings()
+                        }
                         .frame(width: geometry.size.width - 240) // 設置 Slider 的寬度，留出一些間距
                     Spacer()
                 }
@@ -39,6 +43,7 @@ struct SetPage: View {
             HStack {
                 Button(action: {
                     self.points_and_lines_opacity = 1
+                    saveSettings()
                 }) {
                     Text("On")
                         .font(.title2)
@@ -48,6 +53,7 @@ struct SetPage: View {
                 
                 Button(action: {
                     self.points_and_lines_opacity = 0
+                    saveSettings()
                 }) {
                     Text("Off")
                         .font(.title2)
@@ -59,11 +65,30 @@ struct SetPage: View {
             Spacer()
         }
         .padding()
+        .onAppear() {
+            if let setting = settings.first {
+                polygon_opacity = setting.polygonOpacity
+                points_and_lines_opacity = setting.pointsAndLinesOpacity
+            }
+        }
+    }
+    
+    func saveSettings() {
+        let setting: VisionSnapEntity
+        
+        if let firstSetting = settings.first {
+            setting = firstSetting
+        } else {
+            setting = VisionSnapEntity(context: managedObjectContext)
+        }
+        
+        setting.polygonOpacity = polygon_opacity
+        setting.pointsAndLinesOpacity = points_and_lines_opacity
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Error saving settings: \(error)")
+        }
     }
 }
-
-//struct SetPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SetPage()
-//    }
-//}

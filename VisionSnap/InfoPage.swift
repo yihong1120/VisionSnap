@@ -6,16 +6,25 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct InfoPage: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
+    @FetchRequest(entity: VisionSnapEntity.entity(), sortDescriptors: []) var settings: FetchedResults<VisionSnapEntity>
+    
     @State private var locations: [CGPoint] = []
     @State private var polygons: [[CGPoint]] = []
     @State private var uiImage: UIImage? = nil
     @State private var image: Image? = Image(systemName: "photo")
-    @State private var isImagePickerDisplayed = false
-    @AppStorage("polygon_opacity", store: UserDefaults(suiteName: "NYCU.VisionSnap")) private var polygon_opacity: Double = 0.5
-
+    @State private var polygon_opacity: Double = 0.5
+    
     private let closingDistance: CGFloat = 20.0
+
+    @State private var isImagePickerDisplayed = false {
+        didSet {
+            updateIsImagePickerDisplayedInCoreData()
+        }
+    }
 
     var body: some View {
         HStack {
@@ -59,6 +68,7 @@ struct InfoPage: View {
 
                     Button(action: {
                         polygons.removeAll()
+                        clearPolygonsInCoreData() // Clear ploygons data in CoreData
                     }) {
                         Image(systemName: "trash")
                             .resizable()
@@ -104,6 +114,7 @@ struct InfoPage: View {
                                                self.isPoint(value.startLocation, closeTo: self.locations.first!) {
                                                 self.polygons.append(self.locations)
                                                 self.locations = []
+                                                savePolygonsToCoreData() // 保存新的多边形到 CoreData
                                             } else {
                                                 self.locations.append(value.startLocation)
                                             }
@@ -156,17 +167,37 @@ struct InfoPage: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear() {
+            if let setting = settings.first {
+                polygon_opacity = setting.polygonOpacity
+            }
+        }
     }
-
+    
     private func isPoint(_ point1: CGPoint, closeTo point2: CGPoint) -> Bool {
         let dx = point1.x - point2.x
         let dy = point1.y - point2.y
         return sqrt(dx * dx + dy * dy) < closingDistance
     }
+    
+    private func updateIsImagePickerDisplayedInCoreData() {
+        if let setting = settings.first {
+            setting.isImagePickerDisplayed = isImagePickerDisplayed
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("無法儲存 isImagePickerDisplayed 到 CoreData")
+            }
+        } else {
+            let newSetting = VisionSnapEntity(context: managedObjectContext)
+            newSetting.isImagePickerDisplayed = isImagePickerDisplayed
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("無法創建新的設定並儲存到 CoreData")
+            }
+        }
+    }
+    
+    
 }
-
-//struct InfoPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InfoPage()
-//    }
-//}

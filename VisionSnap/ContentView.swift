@@ -73,9 +73,3 @@ struct ContentView: View {
         .background(Color.white.ignoresSafeArea())
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

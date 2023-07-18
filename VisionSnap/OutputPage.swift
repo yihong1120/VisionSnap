@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct OutputPage: View {
     let list_items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
     let list_nums = [[1,2,3], [1,2,3], [1,2,3], [1,2,3], [1,2,3]]
+    
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        sortDescriptors: [],
+        animation: .default)
+    private var entities: FetchedResults<VisionSnapEntity>
     
     var body: some View {
         HStack(alignment: .center) {
@@ -17,7 +25,10 @@ struct OutputPage: View {
                 Spacer()
                 
                 Button(action: {
-                    // 相機按鈕的操作
+                    if let entity = entities.first {
+                        let savedPolygons = entity.polygons as? [[CGPoint]] ?? []
+                        print(savedPolygons)
+                    }
                 }) {
                     Image(systemName: "hand.point.up")
                         .resizable()
@@ -78,9 +89,8 @@ struct OutputPage: View {
     }
 }
 
-
-struct OutputPage_Previews: PreviewProvider {
-    static var previews: some View {
-        OutputPage()
-    }
-}
+//struct OutputPage_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OutputPage()
+//    }
+//}
