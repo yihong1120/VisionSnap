@@ -8,16 +8,33 @@
 import SwiftUI
 import CoreData
 
+struct CodablePoint: Codable {
+    var x: CGFloat
+    var y: CGFloat
+
+    init(from point: CGPoint) {
+        self.x = point.x
+        self.y = point.y
+    }
+
+    var cgPoint: CGPoint {
+        return CGPoint(x: x, y: y)
+    }
+}
+
 struct InfoPage: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(entity: VisionSnapEntity.entity(), sortDescriptors: []) var settings: FetchedResults<VisionSnapEntity>
     
     @State private var locations: [CGPoint] = []
-    @State private var polygons: [[CGPoint]] = []
+    @State private var polygons: [[CGPoint]] = [] {
+        didSet {
+            updatePolygonsInCoreData()
+        }
+    }
     @State private var uiImage: UIImage? = nil
     @State private var image: Image? = Image(systemName: "photo")
     @State private var polygon_opacity: Double = 0.5
-    
     private let closingDistance: CGFloat = 20.0
 
     @State private var isImagePickerDisplayed = false {
@@ -68,7 +85,6 @@ struct InfoPage: View {
 
                     Button(action: {
                         polygons.removeAll()
-                        clearPolygonsInCoreData() // Clear ploygons data in CoreData
                     }) {
                         Image(systemName: "trash")
                             .resizable()
@@ -114,7 +130,6 @@ struct InfoPage: View {
                                                self.isPoint(value.startLocation, closeTo: self.locations.first!) {
                                                 self.polygons.append(self.locations)
                                                 self.locations = []
-                                                savePolygonsToCoreData() // 保存新的多边形到 CoreData
                                             } else {
                                                 self.locations.append(value.startLocation)
                                             }
@@ -170,6 +185,10 @@ struct InfoPage: View {
         .onAppear() {
             if let setting = settings.first {
                 polygon_opacity = setting.polygonOpacity
+                if let data = setting.polygons {
+                    let codablePolygons = try? JSONDecoder().decode([[CodablePoint]].self, from: data)
+                    polygons = codablePolygons?.map { $0.map { $0.cgPoint } } ?? []
+                }
             }
         }
     }
@@ -199,5 +218,25 @@ struct InfoPage: View {
         }
     }
     
-    
+    private func updatePolygonsInCoreData() {
+        let codablePolygons = polygons.map { $0.map { CodablePoint(from: $0) } }
+        let data = try? JSONEncoder().encode(codablePolygons)
+
+        if let setting = settings.first {
+            setting.polygons = data
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("無法儲存 polygons 到 CoreData")
+            }
+        } else {
+            let newSetting = VisionSnapEntity(context: managedObjectContext)
+            newSetting.polygons = data
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("無法創建新的設定並儲存到 CoreData")
+            }
+        }
+    }
 }

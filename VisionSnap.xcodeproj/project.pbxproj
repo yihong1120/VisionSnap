@@ -44,6 +44,7 @@
 /* Begin PBXFileReference section */
 		18042CE82A50040E00985CB6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1813A8AC2A5C13F8006CB6AB /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		18649DE22A68875100649085 /* VisionSnap 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "VisionSnap 2.xcdatamodel"; sourceTree = "<group>"; };
 		18A1E97E2A5304760033B50B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		18B77B302A6185A300DA4EF2 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		18B839DB2A51AB8B00BD3F1A /* InfoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPage.swift; sourceTree = "<group>"; };
@@ -92,7 +93,6 @@
 			isa = PBXGroup;
 			children = (
 				18042CE82A50040E00985CB6 /* README.md */,
-				18BC42262A65554A00BB9BE3 /* VisionSnap.xcdatamodeld */,
 				18BFB6272A45BACB00FB5C07 /* VisionSnap */,
 				18BFB6382A45BACD00FB5C07 /* VisionSnapTests */,
 				18BFB6422A45BACD00FB5C07 /* VisionSnapUITests */,
@@ -113,6 +113,7 @@
 		18BFB6272A45BACB00FB5C07 /* VisionSnap */ = {
 			isa = PBXGroup;
 			children = (
+				18BC42262A65554A00BB9BE3 /* VisionSnap.xcdatamodeld */,
 				18BFB6282A45BACB00FB5C07 /* VisionSnapApp.swift */,
 				18BFB62A2A45BACB00FB5C07 /* ContentView.swift */,
 				18B77B302A6185A300DA4EF2 /* AppState.swift */,
@@ -628,10 +629,12 @@
 		18BC42262A65554A00BB9BE3 /* VisionSnap.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				18649DE22A68875100649085 /* VisionSnap 2.xcdatamodel */,
 				18BC42272A65554A00BB9BE3 /* VisionSnap.xcdatamodel */,
 			);
-			currentVersion = 18BC42272A65554A00BB9BE3 /* VisionSnap.xcdatamodel */;
-			path = VisionSnap.xcdatamodeld;
+			currentVersion = 18649DE22A68875100649085 /* VisionSnap 2.xcdatamodel */;
+			name = VisionSnap.xcdatamodeld;
+			path = VisionSnap/VisionSnap.xcdatamodeld;
 			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
