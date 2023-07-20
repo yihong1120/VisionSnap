@@ -34,6 +34,7 @@ struct InfoPage: View {
     }
     @State private var uiImage: UIImage? = nil
     @State private var image: Image? = Image(systemName: "photo")
+    @State private var storedImage: Image? = nil
     @State private var polygon_opacity: Double = 0.5
     private let closingDistance: CGFloat = 20.0
 
@@ -85,6 +86,15 @@ struct InfoPage: View {
 
                     Button(action: {
                         polygons.removeAll()
+                        image = Image(systemName: "photo") // Reset to placeholder image
+                        if let setting = settings.first {
+                            setting.image = nil
+                            do {
+                                try managedObjectContext.save()
+                            } catch {
+                                print("Unable to delete image from CoreData")
+                            }
+                        }
                     }) {
                         Image(systemName: "trash")
                             .resizable()
@@ -189,6 +199,9 @@ struct InfoPage: View {
                     let codablePolygons = try? JSONDecoder().decode([[CodablePoint]].self, from: data)
                     polygons = codablePolygons?.map { $0.map { $0.cgPoint } } ?? []
                 }
+                if let imageData = setting.image, let uiImage = UIImage(data: imageData) {
+                    image = Image(uiImage: uiImage)
+                }
             }
         }
     }
@@ -205,7 +218,7 @@ struct InfoPage: View {
             do {
                 try managedObjectContext.save()
             } catch {
-                print("無法儲存 isImagePickerDisplayed 到 CoreData")
+                print("Unable to save isImagePickerDisplayed to CoreData")
             }
         } else {
             let newSetting = VisionSnapEntity(context: managedObjectContext)
@@ -213,7 +226,7 @@ struct InfoPage: View {
             do {
                 try managedObjectContext.save()
             } catch {
-                print("無法創建新的設定並儲存到 CoreData")
+                print("Unable to create new setting and save to CoreData")
             }
         }
     }
@@ -224,18 +237,27 @@ struct InfoPage: View {
 
         if let setting = settings.first {
             setting.polygons = data
+            if let uiImage = uiImage {
+                setting.image = uiImage.jpegData(compressionQuality: 1.0)
+            }
+
             do {
                 try managedObjectContext.save()
             } catch {
-                print("無法儲存 polygons 到 CoreData")
+                print("Unable to save polygons and image to CoreData")
             }
         } else {
             let newSetting = VisionSnapEntity(context: managedObjectContext)
             newSetting.polygons = data
+            
+            if let uiImage = uiImage {
+                newSetting.image = uiImage.jpegData(compressionQuality: 1.0)
+            }
+
             do {
                 try managedObjectContext.save()
             } catch {
-                print("無法創建新的設定並儲存到 CoreData")
+                print("Unable to create new setting and save polygons and image to CoreData")
             }
         }
     }

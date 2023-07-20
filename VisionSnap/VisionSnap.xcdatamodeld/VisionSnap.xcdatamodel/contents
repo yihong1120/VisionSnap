@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22189.1" systemVersion="23A5286i" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="VisionSnapEntity" representedClassName="VisionSnapEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName=""/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="isImagePickerDisplayed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="locations" optional="YES" attributeType="Transformable" valueTransformerName=""/>
+        <attribute name="locations" optional="YES" attributeType="Binary"/>
         <attribute name="pointsAndLinesOpacity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="polygonOpacity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="polygons" optional="YES" attributeType="Binary"/>
