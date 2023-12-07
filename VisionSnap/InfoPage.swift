@@ -32,9 +32,9 @@ struct InfoPage: View {
             updatePolygonsInCoreData()
         }
     }
-    @State private var uiImage: UIImage? = nil
+    @State private var uiImage: UIImage?
     @State private var image: Image? = Image(systemName: "photo")
-    @State private var storedImage: Image? = nil
+    @State private var storedImage: Image?
     @State private var polygon_opacity: Double = 0.5
     private let closingDistance: CGFloat = 20.0
 
