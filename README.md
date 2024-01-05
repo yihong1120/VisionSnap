@@ -2,6 +2,12 @@
 
 VisionSnap is a uniquely designed iOS app that employs Swift for seamless camera interactions and sophisticated image recognition. Leveraging the YOLOv8 model on a Google Cloud server, VisionSnap allows real-time image capturing and analysis, providing results instantly back to the device. It is a perfect blend of AI and user experience.
 
+## Techniques
+
+- Swift programming language for iOS app development
+- YOLOv8 model for image recognition
+- Integration with Google Cloud server for real-time analysis
+
 ## Usages
 
 - Capture images and receive instant analysis results
